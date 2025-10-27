@@ -1,3 +1,4 @@
+import 'package:eofut/presentation/pages/arenas/presentation/pages/arenas_list_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../core/utils/validators.dart';
@@ -57,15 +58,20 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 );
               } else if (state is Authenticated) {
-                // Navegar para home (temporariamente só mostra mensagem)
+                // Navegar para lista de arenas
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Bem-vindo, ${state.user.nome}!'),
                     backgroundColor: Colors.green,
                   ),
                 );
-                // TODO: Navegar para home quando criar a HomePage
-                // Navigator.pushReplacementNamed(context, '/home');
+
+                // Navegar para a página de arenas
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (_) => const ArenasListPage(),
+                  ),
+                );
               }
             },
             child: SingleChildScrollView(
