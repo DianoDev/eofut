@@ -12,6 +12,7 @@ abstract class AuthRepository {
     required String email,
     required String password,
     required String nome,
+    required String telefone,
   });
 
   Future<Either<Failure, void>> signOut();

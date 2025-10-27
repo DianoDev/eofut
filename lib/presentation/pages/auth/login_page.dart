@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../core/utils/validators.dart';
-import 'register_page.dart';
+import '../auth/presentation/pages/auth/register_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const SizedBox(height: 60),
-                
+
                 // Logo
                 Center(
                   child: Container(
@@ -72,9 +72,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                
+
                 const SizedBox(height: 32),
-                
+
                 Text(
                   'Bem-vindo!',
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
@@ -82,9 +82,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                   textAlign: TextAlign.center,
                 ),
-                
+
                 const SizedBox(height: 8),
-                
+
                 Text(
                   'Entre para encontrar quadras e parceiros',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -92,9 +92,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                   textAlign: TextAlign.center,
                 ),
-                
+
                 const SizedBox(height: 48),
-                
+
                 // Email
                 TextFormField(
                   controller: _emailController,
@@ -106,9 +106,9 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   validator: Validators.validateEmail,
                 ),
-                
+
                 const SizedBox(height: 16),
-                
+
                 // Senha
                 TextFormField(
                   controller: _passwordController,
@@ -119,9 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                     prefixIcon: const Icon(Icons.lock_outlined),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        _obscurePassword
-                            ? Icons.visibility_outlined
-                            : Icons.visibility_off_outlined,
+                        _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
                       ),
                       onPressed: () {
                         setState(() {
@@ -132,9 +130,9 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   validator: Validators.validatePassword,
                 ),
-                
+
                 const SizedBox(height: 8),
-                
+
                 // Esqueceu senha
                 Align(
                   alignment: Alignment.centerRight,
@@ -145,9 +143,9 @@ class _LoginPageState extends State<LoginPage> {
                     child: const Text('Esqueceu a senha?'),
                   ),
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Botão Login
                 ElevatedButton(
                   onPressed: _isLoading ? null : _handleLogin,
@@ -161,9 +159,9 @@ class _LoginPageState extends State<LoginPage> {
                         )
                       : const Text('Entrar'),
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Divisor
                 Row(
                   children: [
@@ -178,9 +176,9 @@ class _LoginPageState extends State<LoginPage> {
                     Expanded(child: Divider(color: Colors.grey[300])),
                   ],
                 ),
-                
+
                 const SizedBox(height: 24),
-                
+
                 // Botão Registrar
                 OutlinedButton(
                   onPressed: () {
