@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../../core/utils/validators.dart';
-import '../../../injection_container.dart';
-import '../../bloc/auth/auth_bloc.dart';
-import '../../bloc/auth/auth_event.dart';
-import '../../bloc/auth/auth_state.dart';
+import 'package:eofut/core/utils/validators.dart';
+import 'package:eofut/presentation/pages/auth/injection_container.dart';
+import 'package:eofut/presentation/pages/auth/presentation/bloc/auth/auth_bloc.dart';
+import 'package:eofut/presentation/pages/auth/presentation/bloc/auth/auth_event.dart';
+import 'package:eofut/presentation/pages/auth/presentation/bloc/auth/auth_state.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -57,6 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    print('AuthBloc registrado? ${sl.isRegistered<AuthBloc>()}');
     return BlocProvider(
       create: (_) => sl<AuthBloc>(),
       child: Scaffold(

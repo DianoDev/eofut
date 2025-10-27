@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'core/network/supabase_config.dart';
-import 'injection_container.dart' as di;
+import 'package:eofut/presentation/pages/auth/injection_container.dart' as di;
 import 'app.dart';
 
 void main() async {

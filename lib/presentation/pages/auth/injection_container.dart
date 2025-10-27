@@ -1,13 +1,13 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../core/network/supabase_config.dart';
+import 'package:eofut/core/network/supabase_config.dart';
 
 // Auth - Data Sources
 import 'data/datasources/auth_remote_data_source.dart';
 
 // Auth - Repositories
 import 'data/repositories/auth_repository_impl.dart';
-import '../../../domain/repositories/auth_repository.dart';
+import 'package:eofut/domain/repositories/auth_repository.dart';
 
 // Auth - Use Cases
 import 'domain/usecases/login_usecase.dart';
@@ -24,6 +24,7 @@ Future<void> init() async {
   // ============================================
   // BLoCs
   // ============================================
+  print('✅ AuthBloc registrado!');
 
   /// Auth BLoC - Factory para criar nova instância quando necessário
   sl.registerFactory(
@@ -34,7 +35,6 @@ Future<void> init() async {
       getCurrentUserUseCase: sl(),
     ),
   );
-
   // ============================================
   // Use Cases
   // ============================================
