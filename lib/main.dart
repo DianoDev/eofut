@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'core/network/supabase_config.dart';
-import 'injection_container.dart' as di;
+import 'package:eofut/presentation/pages/auth/injection_container.dart' as auth_di;
+import 'package:eofut/presentation/pages/arenas/injection_container.dart' as arena_di;
 import 'app.dart';
 
 void main() async {
@@ -17,7 +18,7 @@ void main() async {
   await SupabaseConfig.initialize();
 
   // Inicializar Dependency Injection
-  await di.init();
-
+  await auth_di.init();
+  await arena_di.init();
   runApp(const MyApp());
 }
