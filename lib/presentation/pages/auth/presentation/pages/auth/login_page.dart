@@ -6,7 +6,7 @@ import '../../../injection_container.dart';
 import '../../bloc/auth/auth_bloc.dart';
 import '../../bloc/auth/auth_event.dart';
 import '../../bloc/auth/auth_state.dart';
-import 'register_page.dart';
+import 'select_account_type_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -204,7 +204,7 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => const RegisterPage(),
+                            builder: (_) => const SelectAccountTypePage(),
                           ),
                         );
                       },

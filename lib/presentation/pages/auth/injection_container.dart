@@ -11,7 +11,9 @@ import 'package:eofut/domain/repositories/auth_repository.dart';
 
 // Auth - Use Cases
 import 'domain/usecases/login_usecase.dart';
-import 'domain/usecases/register_usecase.dart';
+import 'domain/usecases/register_jogador_usecase.dart';
+import 'domain/usecases/register_arena_usecase.dart';
+import 'domain/usecases/register_professor_usecase.dart';
 import 'domain/usecases/logout_usecase.dart';
 import 'domain/usecases/get_current_user_usecase.dart';
 
@@ -24,32 +26,30 @@ Future<void> init() async {
   // ============================================
   // BLoCs
   // ============================================
-  print('✅ AuthBloc registrado!');
-
-  /// Auth BLoC - Factory para criar nova instância quando necessário
   sl.registerFactory(
     () => AuthBloc(
       loginUseCase: sl(),
-      registerUseCase: sl(),
+      registerJogadorUseCase: sl(),
+      registerArenaUseCase: sl(),
+      registerProfessorUseCase: sl(),
       logoutUseCase: sl(),
       getCurrentUserUseCase: sl(),
     ),
   );
+
   // ============================================
   // Use Cases
   // ============================================
-
-  /// Auth Use Cases - LazySingleton para reutilizar instâncias
   sl.registerLazySingleton(() => LoginUseCase(sl()));
-  sl.registerLazySingleton(() => RegisterUseCase(sl()));
+  sl.registerLazySingleton(() => RegisterJogadorUseCase(sl()));
+  sl.registerLazySingleton(() => RegisterArenaUseCase(sl()));
+  sl.registerLazySingleton(() => RegisterProfessorUseCase(sl()));
   sl.registerLazySingleton(() => LogoutUseCase(sl()));
   sl.registerLazySingleton(() => GetCurrentUserUseCase(sl()));
 
   // ============================================
   // Repositories
   // ============================================
-
-  /// Auth Repository Implementation
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(remoteDataSource: sl()),
   );
@@ -57,8 +57,6 @@ Future<void> init() async {
   // ============================================
   // Data Sources
   // ============================================
-
-  /// Auth Remote Data Source
   sl.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImpl(supabaseClient: SupabaseConfig.client),
   );
@@ -66,11 +64,7 @@ Future<void> init() async {
   // ============================================
   // External Dependencies
   // ============================================
-
-  /// Shared Preferences
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
-
-  /// Supabase Client
   sl.registerLazySingleton(() => SupabaseConfig.client);
 }

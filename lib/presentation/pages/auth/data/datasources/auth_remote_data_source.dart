@@ -9,11 +9,42 @@ abstract class AuthRemoteDataSource {
     required String password,
   });
 
-  /// Registrar novo usuário
-  Future<UserModel> signUp({
+  /// Registrar novo JOGADOR
+  Future<UserModel> signUpJogador({
+    required String nome,
     required String email,
     required String password,
+    required String telefone,
+    String? cidade,
+    String? estado,
+    String? nivelJogo,
+  });
+
+  /// Registrar nova ARENA
+  Future<UserModel> signUpArena({
+    required String nomeEstabelecimento,
+    required String email,
+    required String password,
+    required String telefone,
+    required String cnpj,
+    required String enderecoCompleto,
+    required String cidade,
+    required String estado,
+    Map<String, dynamic>? horarioFuncionamento,
+  });
+
+  /// Registrar novo PROFESSOR
+  Future<UserModel> signUpProfessor({
     required String nome,
+    required String email,
+    required String password,
+    required String telefone,
+    List<String>? certificacoes,
+    List<String>? especialidades,
+    double? valorHoraAula,
+    int? experienciaAnos,
+    String? cidade,
+    String? estado,
   });
 
   /// Fazer logout
@@ -64,10 +95,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   }
 
   @override
-  Future<UserModel> signUp({
+  Future<UserModel> signUpJogador({
+    required String nome,
     required String email,
     required String password,
-    required String nome,
+    required String telefone,
+    String? cidade,
+    String? estado,
+    String? nivelJogo,
   }) async {
     try {
       // 1. Criar usuário no Supabase Auth
@@ -80,21 +115,21 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         throw const ServerException('Erro ao criar conta');
       }
 
-      // 2. Criar registro na tabela users com TODOS os campos
+      // 2. Criar registro na tabela users com tipo JOGADOR
       final userData = await supabaseClient
           .from('users')
           .insert({
             'firebase_uid': response.user!.id,
             'nome': nome,
             'email': email,
-            // Campos opcionais iniciam como null
-            'telefone': null,
+            'telefone': telefone,
+            'tipo_usuario': 'jogador',
+            'cidade': cidade,
+            'estado': estado,
+            'nivel_jogo': nivelJogo ?? 'iniciante',
             'foto_url': null,
-            'cidade': null,
-            'estado': null,
             'data_nascimento': null,
             'genero': null,
-            'nivel_jogo': 'iniciante', // valor padrão
             'posicao_preferida': null,
             'bio': null,
             'rating': 0.0,
@@ -109,7 +144,123 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     } catch (e) {
-      throw ServerException('Erro ao criar conta: $e');
+      throw ServerException('Erro ao criar conta de jogador: $e');
+    }
+  }
+
+  @override
+  Future<UserModel> signUpArena({
+    required String nomeEstabelecimento,
+    required String email,
+    required String password,
+    required String telefone,
+    required String cnpj,
+    required String enderecoCompleto,
+    required String cidade,
+    required String estado,
+    Map<String, dynamic>? horarioFuncionamento,
+  }) async {
+    try {
+      // 1. Criar usuário no Supabase Auth
+      final response = await supabaseClient.auth.signUp(
+        email: email,
+        password: password,
+      );
+
+      if (response.user == null) {
+        throw const ServerException('Erro ao criar conta');
+      }
+
+      // 2. Criar registro na tabela users com tipo ARENA
+      final userData = await supabaseClient
+          .from('users')
+          .insert({
+            'firebase_uid': response.user!.id,
+            'nome': nomeEstabelecimento, // O nome da arena
+            'email': email,
+            'telefone': telefone,
+            'tipo_usuario': 'arena',
+            'cnpj': cnpj,
+            'nome_estabelecimento': nomeEstabelecimento,
+            'endereco_completo': enderecoCompleto,
+            'cidade': cidade,
+            'estado': estado,
+            'horario_funcionamento': horarioFuncionamento,
+            'foto_url': null,
+            'rating': 0.0,
+            'total_avaliacoes': 0,
+          })
+          .select()
+          .single();
+
+      // O trigger vai criar automaticamente o registro na tabela arenas
+
+      return UserModel.fromJson(userData);
+    } on AuthException catch (e) {
+      throw ServerException(e.message);
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException('Erro ao criar conta de arena: $e');
+    }
+  }
+
+  @override
+  Future<UserModel> signUpProfessor({
+    required String nome,
+    required String email,
+    required String password,
+    required String telefone,
+    List<String>? certificacoes,
+    List<String>? especialidades,
+    double? valorHoraAula,
+    int? experienciaAnos,
+    String? cidade,
+    String? estado,
+  }) async {
+    try {
+      // 1. Criar usuário no Supabase Auth
+      final response = await supabaseClient.auth.signUp(
+        email: email,
+        password: password,
+      );
+
+      if (response.user == null) {
+        throw const ServerException('Erro ao criar conta');
+      }
+
+      // 2. Criar registro na tabela users com tipo PROFESSOR
+      final userData = await supabaseClient
+          .from('users')
+          .insert({
+            'firebase_uid': response.user!.id,
+            'nome': nome,
+            'email': email,
+            'telefone': telefone,
+            'tipo_usuario': 'professor',
+            'certificacoes': certificacoes,
+            'especialidades': especialidades,
+            'valor_hora_aula': valorHoraAula,
+            'experiencia_anos': experienciaAnos,
+            'cidade': cidade,
+            'estado': estado,
+            'foto_url': null,
+            'bio': null,
+            'rating': 0.0,
+            'total_avaliacoes': 0,
+          })
+          .select()
+          .single();
+
+      // O trigger vai criar automaticamente o registro na tabela professores
+
+      return UserModel.fromJson(userData);
+    } on AuthException catch (e) {
+      throw ServerException(e.message);
+    } on PostgrestException catch (e) {
+      throw ServerException(e.message);
+    } catch (e) {
+      throw ServerException('Erro ao criar conta de professor: $e');
     }
   }
 
@@ -148,7 +299,6 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     } on PostgrestException catch (e) {
       throw ServerException(e.message);
     } catch (e) {
-      // Se não houver usuário, retorna null em vez de lançar exceção
       return null;
     }
   }

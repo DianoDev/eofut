@@ -22,24 +22,97 @@ class AuthRepositoryImpl implements AuthRepository {
       );
       return Right(userModel.toEntity());
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.message)); // SEM named parameter!
+      return Left(ServerFailure(e.message));
     } catch (e) {
       return Left(ServerFailure('Erro desconhecido: $e'));
     }
   }
 
   @override
-  Future<Either<Failure, User>> signUp({
+  Future<Either<Failure, User>> signUpJogador({
+    required String nome,
     required String email,
     required String password,
-    required String nome,
     required String telefone,
+    String? cidade,
+    String? estado,
+    String? nivelJogo,
   }) async {
     try {
-      final userModel = await remoteDataSource.signUp(
+      final userModel = await remoteDataSource.signUpJogador(
+        nome: nome,
         email: email,
         password: password,
+        telefone: telefone,
+        cidade: cidade,
+        estado: estado,
+        nivelJogo: nivelJogo,
+      );
+      return Right(userModel.toEntity());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure('Erro desconhecido: $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> signUpArena({
+    required String nomeEstabelecimento,
+    required String email,
+    required String password,
+    required String telefone,
+    required String cnpj,
+    required String enderecoCompleto,
+    required String cidade,
+    required String estado,
+    Map<String, dynamic>? horarioFuncionamento,
+  }) async {
+    try {
+      final userModel = await remoteDataSource.signUpArena(
+        nomeEstabelecimento: nomeEstabelecimento,
+        email: email,
+        password: password,
+        telefone: telefone,
+        cnpj: cnpj,
+        enderecoCompleto: enderecoCompleto,
+        cidade: cidade,
+        estado: estado,
+        horarioFuncionamento: horarioFuncionamento,
+      );
+      return Right(userModel.toEntity());
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure('Erro desconhecido: $e'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> signUpProfessor({
+    required String nome,
+    required String email,
+    required String password,
+    required String telefone,
+    List<String>? certificacoes,
+    List<String>? especialidades,
+    double? valorHoraAula,
+    int? experienciaAnos,
+    String? cidade,
+    String? estado,
+  }) async {
+    try {
+      final userModel = await remoteDataSource.signUpProfessor(
         nome: nome,
+        email: email,
+        password: password,
+        telefone: telefone,
+        certificacoes: certificacoes,
+        especialidades: especialidades,
+        valorHoraAula: valorHoraAula,
+        experienciaAnos: experienciaAnos,
+        cidade: cidade,
+        estado: estado,
       );
       return Right(userModel.toEntity());
     } on ServerException catch (e) {
@@ -94,5 +167,11 @@ class AuthRepositoryImpl implements AuthRepository {
       if (userModel == null) return null;
       return userModel.toEntity();
     });
+  }
+
+  @override
+  Future<Either<Failure, User>> signUp({required String email, required String password, required String nome, required String telefone}) {
+    // TODO: implement signUp
+    throw UnimplementedError();
   }
 }
