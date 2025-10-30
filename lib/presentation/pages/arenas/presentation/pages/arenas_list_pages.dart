@@ -1,3 +1,4 @@
+import 'package:eofut/presentation/pages/professores/presentation/pages/professor_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eofut/core/utils/formatters.dart';
@@ -149,11 +150,8 @@ class _ArenasListPageState extends State<ArenasListPage> {
                             numeroQuadras: arena.numeroQuadras,
                             fotos: arena.fotos,
                             onTap: () {
-                              // TODO: Navegar para detalhes da arena
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('Arena: ${arena.nome}'),
-                                ),
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(builder: (_) => const ProfessoresListPage()),
                               );
                             },
                           );
