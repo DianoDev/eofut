@@ -1,4 +1,5 @@
 import 'package:eofut/presentation/pages/arenas/presentation/pages/arenas_list_pages.dart';
+import 'package:eofut/presentation/pages/splash/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../core/utils/validators.dart';
@@ -69,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                 // Navegar para a página de arenas
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (_) => const ArenasListPage(),
+                    builder: (_) => const SplashPage(),
                   ),
                 );
               }
