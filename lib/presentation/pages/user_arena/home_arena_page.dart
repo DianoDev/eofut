@@ -1,3 +1,5 @@
+import 'package:eofut/presentation/pages/campeonatos/domain/entities/campeonato.dart';
+import 'package:eofut/presentation/pages/campeonatos/presentation/pages/campeonato_form_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eofut/domain/entities/user.dart';
@@ -180,14 +182,15 @@ class HomeArenaPage extends StatelessWidget {
                         },
                       ),
                       _MenuCard(
-                        icon: Icons.photo_library,
-                        title: 'Fotos',
-                        subtitle: 'Galeria da arena',
+                        icon: Icons.first_page,
+                        title: 'Campeonatos',
+                        subtitle: 'Campeonatos organizados',
                         color: Colors.purple,
                         onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Em breve!'),
+                          // Navegar para a página de arenas
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (_) => const CampeonatoFormPage(),
                             ),
                           );
                         },

@@ -4,6 +4,7 @@ import 'core/network/supabase_config.dart';
 import 'package:eofut/presentation/pages/auth/injection_container.dart' as auth_di;
 import 'package:eofut/presentation/pages/arenas/injection_container.dart' as arena_di;
 import 'package:eofut/presentation/pages/professores/injection_container.dart' as professor_di;
+import 'package:eofut/presentation/pages/campeonatos/injection_container.dart' as campeonato_di;
 import 'app.dart';
 
 void main() async {
@@ -22,5 +23,6 @@ void main() async {
   await auth_di.init();
   await arena_di.init();
   await professor_di.init();
+  await campeonato_di.init();
   runApp(const MyApp());
 }
