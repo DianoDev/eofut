@@ -1,5 +1,6 @@
 import 'package:eofut/presentation/pages/campeonatos/domain/entities/campeonato.dart';
 import 'package:eofut/presentation/pages/campeonatos/presentation/pages/campeonato_form_page.dart';
+import 'package:eofut/presentation/pages/quadras/presentation/pages/quadra_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:eofut/domain/entities/user.dart';
@@ -156,14 +157,16 @@ class HomeArenaPage extends StatelessWidget {
                         },
                       ),
                       _MenuCard(
-                        icon: Icons.schedule,
-                        title: 'Horários',
-                        subtitle: 'Disponibilidade',
+                        icon: Icons.sports_tennis,
+                        title: 'Quadras',
+                        subtitle: 'Gerenciar quadras',
                         color: Colors.orange,
                         onTap: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Em breve!'),
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => QuadrasListPage(
+                                arenaId: user.id,
+                              ),
                             ),
                           );
                         },
@@ -182,13 +185,12 @@ class HomeArenaPage extends StatelessWidget {
                         },
                       ),
                       _MenuCard(
-                        icon: Icons.first_page,
+                        icon: Icons.emoji_events,
                         title: 'Campeonatos',
-                        subtitle: 'Campeonatos organizados',
+                        subtitle: 'Organizar campeonatos',
                         color: Colors.purple,
                         onTap: () {
-                          // Navegar para a página de arenas
-                          Navigator.of(context).pushReplacement(
+                          Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (_) => const CampeonatoFormPage(),
                             ),
